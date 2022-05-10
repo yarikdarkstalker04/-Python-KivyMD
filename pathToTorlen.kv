@@ -1,0 +1,321 @@
+#:kivy 2.0.0
+<KnightGame>:
+	control_knight:gamepad_k
+	control_zone_knight:gamepad_zone_k
+	control_shield:gamepad_s
+	control_zone_shield:gamepad_zone_s
+	
+	knight:hero
+	hp_indicate:hp_indicate_id
+	items_collection:my_items_collection
+	shield:defense
+	shield_effects:my_shield_effects_collection
+	
+	archers:my_archers_collection
+	arrows:my_arrows_collection
+
+	walls:my_wall_collection
+	fake_exit:exit_id
+	true_exit:true_exit_id
+	
+	knight_back_center_x:root.width/2
+	knight_back_center_y:root.height/4
+	
+	effects:my_effects_collection
+	
+	windows:my_windows_collection
+	Collection_of_effects:
+		id:my_effects_collection
+	Collection_of_items:
+		id:my_items_collection
+	Collection_of_archers:
+		id:my_archers_collection
+	Collection_of_arrows:
+		id:my_arrows_collection
+	Knight:
+		id:hero
+		center_x:root.width/2
+		center_y:root.height/2
+	Shield:
+		id:defense
+		is_pressed:False
+		center_x:self.parent.knight.right
+		center_y:self.parent.knight.center_y
+		knight_pos_x:1.1
+		knight_pos_y:0.5
+		angle:0
+		canvas.before:
+			PushMatrix
+			Rotate:
+				angle:self.angle
+				origin:self.center
+		canvas.after:
+			PopMatrix
+	Shield_effects:
+		id:my_shield_effects_collection
+	Wall:
+		id:exit_id
+		size:root.width/10,root.height/20
+		center_x:root.center_x
+		center_y:root.y
+	Wall:
+		id:true_exit_id
+		size:root.width/10,root.height/20
+		center_x:root.center_x
+		center_y:root.y+root.height-self.height
+	Collection_of_walls:
+		id:my_wall_collection
+		size:root.size
+	Label:
+		font_size:30
+		right:root.width
+		top:root.top
+		text:str(root.coins)
+	Hp_indicate:
+		id:hp_indicate_id
+	GamepadZone:
+		id:gamepad_zone_k
+		center_x:root.width/4
+		center_y:root.height/5
+	Gamepad:
+		id:gamepad_k
+		center_x:self.parent.control_zone_knight.center_x
+		center_y:self.parent.control_zone_knight.center_y
+	GamepadZone:
+		id:gamepad_zone_s
+		center_x:root.width - root.width/4
+		center_y:root.height/5
+	Gamepad:
+		id:gamepad_s
+		center_x:self.parent.control_zone_shield.center_x
+		center_y:self.parent.control_zone_shield.center_y
+	Collection_of_effects:
+		id:my_windows_collection
+		
+<Gamepad>:
+	size:20,20
+	canvas:
+		Color:
+			rgb:1,.3,.8
+		Ellipse:
+			pos: self.pos
+			size:self.size
+<GamepadZone>:
+	size:50,50
+	canvas:
+		Color:
+			rgb:1,1,1
+		Ellipse:
+			pos: self.pos
+			size:self.size
+<Trader>:
+	canvas:
+		Color:
+			rgb:.72,.48,.34
+		Rectangle:
+			size:self.size
+			pos:self.pos
+<Info_window>:			
+<Knight>:
+	size:60,60
+	max_hp:3
+	hp:self.max_hp
+	stopped:False
+	equip_items:magick_items
+	speed_x:0
+	speed_y:0
+	canvas:
+		Color:
+			rgb:0.3,0.3,0.3
+		Ellipse:
+			pos:self.pos
+			size:self.size
+
+	Collection_of_items:
+		id:magick_items
+<Item_on_ground>:
+	item:"nope"
+	size:20,20
+	canvas:
+		Color:
+			rgb:.5,1,.4
+		Rectangle:
+			pos:self.pos
+			size:self.size
+<Hp_indicate>:
+<Heart>:
+	size:30,30
+    canvas:
+        Color:
+            rgb:.4,.4,.8
+        Rectangle:
+            pos:self.pos
+			size:self.size
+<Collection_of_items>:
+<Coin>:
+	size:5,5
+	cost:1
+	canvas:
+		Color:
+			rgb:1,1,0
+		Ellipse:
+			size:self.size
+			pos:self.pos
+
+<Shield>:
+	size:10,60
+	type:"Classic"
+	is_posioned:False
+	canvas:
+		Color:
+			rgb:1,0,0
+		Rectangle:
+			pos:self.pos
+			size:self.size
+	Shield_Classic:
+<Shield_effects>:
+<Shield_on_ground>:
+	size:20,20
+	canvas:
+		Color:
+			rgb:1,0,0
+		Rectangle:
+			pos:self.pos
+			size:self.size			
+<Collection_of_archers>:
+<Archer>:
+	size:40,40
+	coins_chance:30
+	cost_max:10
+	cost_min:3
+	type_of_arrow:"Arrow"
+	tipical_speed:5
+	reload:3
+	last_attack_time:0
+	self_last_attack_time:0
+	arrow_angle:0
+	run_zone:run_zone_id
+	start_move:0
+	move_reload:2
+	move_time:1
+	touch_wall:False
+	back_x:self.center_x
+	back_y:self.center_y
+	canvas:
+		Color:
+			rgb:0,1,0
+		Ellipse:
+			pos:self.pos
+			size:self.size
+	Run_zone:
+		id:run_zone_id
+		center:root.center	
+<Spider>:
+	size:40,40
+	coins_chance:60
+	cost_max:5
+	cost_min:1
+	tipical_speed:5
+	type_of_arrow:"Web"
+	reload:4
+	last_attack_time:0
+	arrow_angle:0
+	canvas:
+		Color:
+			rgb:0,1,0
+		Rectangle:
+			pos:self.pos
+			size:self.size
+<Boss_spider>:
+	size:100,100
+	coins_chance:100
+	cost_max:50
+	cost_min:30
+	type_attack:1
+	type_of_arrow:"Poison_arrow"
+	web_speed_x:5
+	web_speed_y:5
+	center:root.center
+	available_spiders:3
+	canvas:
+		Color:
+			rgb:.7,.4,.9
+		Rectangle:
+			pos:self.pos
+			size:self.size
+<Poison_arrow>:					
+<Run_zone>:
+	size:80,80
+	canvas:
+		Color:
+			rgba:1,0,0,0
+		Rectangle:
+			pos:self.pos
+			size:self.size
+<Collection_of_arrows>:
+<Arrow>:
+	size:4,4
+	canvas:
+		Color:
+			rgb:0,0,1
+		Rectangle:
+			pos:self.pos
+			size:self.size
+	speed_x:0
+	speed_y:0
+<Web>:
+	size:20,20
+	canvas:
+		Color:
+			rgb:0.3,0.2,0.1
+		Rectangle:
+			pos:self.pos
+			size:self.size
+	speed_x:0
+	speed_y:0
+<Collection_of_walls>:
+	left_wall:left_wall_id
+	right_wall:right_wall_id
+	top_wall:top_wall_id
+	down_wall:down_wall_id
+	Wall:
+		id:top_wall_id
+		size:root.width,20
+		pos:root.x,root.height-self.height
+	Wall:
+		id:right_wall_id
+		size:20,root.height
+		pos:root.width-self.width,root.y
+	Wall:
+		id:left_wall_id
+		size:20,root.height
+		pos:root.x,root.y
+	Wall:
+		id:down_wall_id	
+		size:root.width,20
+		pos:root.x,root.y
+<Wall>:
+	canvas:
+		Color:
+			rgb:1,1,1
+		Rectangle:
+			pos:self.pos
+			size:self.size
+
+
+<Collection_of_effects>:
+<Poison_puddle>:
+    size:80,80
+	reload:1
+	last_effect_time:0
+	life_time:6
+	last_attack_time:0
+    canvas:
+        Color:
+            rgb:0.9,0.1,1
+        Ellipse:
+            size:self.size
+			pos:self.pos
+
+
+	
